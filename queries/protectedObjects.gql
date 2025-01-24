@@ -1,0 +1,13 @@
+query protectedObjects {
+    objects: snappableConnection(filter: {objectType: VmwareVirtualMachine}) {
+        nodes {
+            name
+            id
+            objectType
+            lastSnapshot
+            slaDomain {
+                name
+            }
+        }
+    }
+}

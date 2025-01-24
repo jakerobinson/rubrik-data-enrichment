@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSC snapshot scatterplot</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="plot"></div>
+
+    <script>
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                let now = new Date();  // Current time
+                let last24Hours = new Date(now.getTime() - (24 * 60 * 60 * 1000));  // 24 hours ago
+
+                let timestamps = data.map(d => new Date(d.lastSnapshot));
+                let names = data.map(d => d.name);
+
+
+                let trace = {
+                    x: timestamps,
+                    y: names,
+                    mode: 'markers',
+                    type: 'scatter',
+                    marker: { size: 5 }
+                };
+
+                let layout = {
+                    title: "Virtual Machine Backups",
+                    xaxis: {
+                        title: "Time",
+                        type: "date",
+                        range: [last24Hours, now]
+                    },
+                    yaxis: {
+                        title: "",
+                        showticklabels: false,
+                        range: [0, 800]
+                    },
+                    height: 500,
+                    dragmode: "select" // Enables range selection
+                };
+
+                Plotly.newPlot("plot", [trace], layout);
+
+                document.getElementById("plot").on('plotly_selected', function(eventData) {
+                    if (eventData) {
+                        let selectedRange = eventData.range.x;
+                        alert(`Highlighted Range: ${new Date(selectedRange[0]).toLocaleString()} to ${new Date(selectedRange[1]).toLocaleString()}`);
+                    }
+                });
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    </script>
+
+</body>
+</html>
+

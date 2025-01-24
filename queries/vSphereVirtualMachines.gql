@@ -1,0 +1,27 @@
+query vsphereVirtualMachines {
+  vSphereVmNewConnection {
+    nodes {
+      name
+      id
+      vsphereVirtualDisks {
+        nodes {
+          fileName
+          datastore {
+            datastoreType
+            physicalPath {
+              name
+              objectType
+            }
+            logicalPath {
+              name
+              objectType
+            }
+            cluster {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
