@@ -10,7 +10,7 @@ This repository contains instructions and examples to begin using Rubrik's API t
 ```bash
 export RSC_CLIENT_ID="your-client-id"
 export RSC_CLIENT_SECRET="your-client-secret"
-export RSC_FQDN="https://YOUR_INSTANCE.my.rubrik.com"
+export RSC_FQDN="YOUR_INSTANCE.my.rubrik.com"
 ```
 
 `setup.sh` will create a python environment and install the required python modules needed for all the examples in this repo.
